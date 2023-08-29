@@ -22,7 +22,7 @@ jobs:
         sudo apt-get install openssl
 
     - name: Install Dependencies
-      run: composer install
+      run: composer update
 
     - name: Build Assets  
       run: |
