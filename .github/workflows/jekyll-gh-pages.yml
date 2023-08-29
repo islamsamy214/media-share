@@ -1,35 +1,36 @@
-name: Deploy Laravel 
+name: Deploy Laravel
 
 on:
   push:
     branches:
       - main
-  workflow_dispatch:   
+  workflow_dispatch:
 
 jobs:
 
   build:
 
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
 
     steps:
 
     - uses: actions/checkout@v2
 
-    - name: Upgrade OpenSSL
+    - name: Install Composer
       run: |
-        sudo apt-get update
-        sudo apt-get install openssl
+        php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+        php composer-setup.php --install-dir=/usr/local/bin --filename=composer --version=2.0.12
+        php -r "unlink('composer-setup.php');"
 
     - name: Install Dependencies
       run: composer update
 
-    - name: Build Assets  
+    - name: Build Assets
       run: |
         npm install
         npm run prod
 
-    - name: Cache configuration
+    - name: Cache configuration  
       run: php artisan config:cache
 
     - name: Upload artifact
@@ -39,21 +40,21 @@ jobs:
         path: public
 
   deploy:
-    
+
     needs: build
-   
+
     runs-on: ubuntu-latest
 
     steps:
-
-    - name: Download artifact  
+    
+    - name: Download artifact
       uses: actions/download-artifact@v2
       with:
-       name: pages
-       path: public
+        name: pages
+        path: public
 
     - name: Deploy to GitHub Pages
       uses: peaceiris/actions-gh-pages@v3
-      with: 
+      with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         publish_dir: ./public
