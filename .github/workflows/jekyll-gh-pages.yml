@@ -1,36 +1,60 @@
+name: Deploy Laravel
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
 jobs:
   build:
-
     runs-on: ubuntu-22.04
-    
+
     steps:
+      - uses: actions/checkout@v2
 
-    - uses: actions/checkout@v2
-    
-    - name: Setup Node 16
-      uses: actions/setup-node@v2
-      with:
-        node-version: 16
+      - name: Install Composer
+        run: |
+          php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+          php composer-setup.php --install-dir=/usr/local/bin --filename=composer --version=2.0.12
+          php -r "unlink('composer-setup.php');"
 
-    - name: Install Composer
-      run: |
-        php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
-        php composer-setup.php --install-dir=/usr/local/bin --filename=composer --version=2.0.12
-        php -r "unlink('composer-setup.php');"
+      - name: Install Dependencies
+        run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
 
-    - name: Install Dependencies
-      run: composer update -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
+      - name: Setup Node 16
+        uses: actions/setup-node@v2
+        with:
+          node-version: 16
 
-    - name: Build Assets
-      run: |
-        npm install --legacy-peer-deps
-        npm run prod
+      - name: Build Assets
+        run: |
+          npm install --legacy-peer-deps
+          npm run prod
 
-    - name: Cache configuration  
-      run: php artisan config:cache
+      - name: Cache configuration
+        run: php artisan config:cache
 
-    - name: Upload artifact
-      uses: actions/upload-artifact@v2
-      with:
-        name: pages
-        path: public
+      - name: Upload artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: pages
+          path: public
+
+  deploy:
+    needs: build
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Download artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: pages
+          path: public
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./public
