@@ -1,6 +1,6 @@
 name: Deploy Laravel
 
-on:
+on: 
   push:
     branches:
       - main
@@ -8,29 +8,50 @@ on:
 
 jobs:
 
-  build:
+  composer:
 
-    runs-on: ubuntu-22.04
+    runs-on: self-hosted
 
     steps:
-
     - uses: actions/checkout@v2
-
-    - name: Install Composer
-      run: |
-        php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
-        php composer-setup.php --install-dir=/usr/local/bin --filename=composer --version=2.0.12
-        php -r "unlink('composer-setup.php');"
 
     - name: Install Dependencies
       run: composer update
 
-    - name: Build Assets
+    - name: Archive vendor folder
+      run: tar czf vendor.tar.gz vendor
+
+    - name: Upload artifact
+      uses: actions/upload-artifact@v2  
+      with:
+        name: vendor
+        path: vendor.tar.gz
+
+  build:
+
+    needs: composer
+
+    runs-on: ubuntu-latest
+
+    steps:
+    
+    - uses: actions/checkout@v2
+
+    - name: Download vendor
+      uses: actions/download-artifact@v2
+      with:
+        name: vendor
+        path: .
+
+    - name: Unzip vendor
+      run: tar xzf vendor.tar.gz
+
+    - name: Build Assets  
       run: |
         npm install
         npm run prod
 
-    - name: Cache configuration  
+    - name: Cache configuration
       run: php artisan config:cache
 
     - name: Upload artifact
@@ -38,7 +59,7 @@ jobs:
       with:
         name: pages
         path: public
-
+  
   deploy:
 
     needs: build
@@ -46,12 +67,12 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    
-    - name: Download artifact
+
+    - name: Download artifact  
       uses: actions/download-artifact@v2
       with:
-        name: pages
-        path: public
+       name: pages
+       path: public
 
     - name: Deploy to GitHub Pages
       uses: peaceiris/actions-gh-pages@v3
