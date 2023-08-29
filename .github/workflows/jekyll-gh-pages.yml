@@ -1,6 +1,6 @@
-name: Deploy Laravel 
+name: Deploy Laravel
 
-on: 
+on:
   push:
     branches:
       - main
@@ -9,32 +9,42 @@ on:
 jobs:
 
   build:
+
     runs-on: ubuntu-latest
+
     steps:
     - uses: actions/checkout@v2
+    
+    - name: Setup PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: 7.4
 
-    - name: Setup Pages
-      uses: actions/configure-pages@v2
+    - name: Install Dependencies
+      run: composer install
 
-    - name: Build with Laravel
+    - name: Build Assets
       run: |
-        composer install
         npm install
         npm run prod
-        php artisan config:cache
 
-    - name: Upload artifact
-      uses: actions/upload-pages-artifact@v1
+    - name: Cache configuration
+      run: php artisan config:cache
+
+    - name: Upload artifact  
+      uses: actions/upload-artifact@v2
       with:
         name: pages
         path: public
 
   deploy:
+
     needs: build
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v2
     
+    runs-on: ubuntu-latest
+
+    steps:
+
     - name: Download artifact
       uses: actions/download-artifact@v2
       with:
