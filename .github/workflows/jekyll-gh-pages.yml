@@ -1,91 +1,48 @@
-# Sample workflow for building and deploying a Jekyll site to GitHub Pages
-name: Deploy Jekyll with GitHub Pages dependencies preinstalled
+name: Deploy Laravel 
 
-on:
-  # Runs on pushes targeting the default branch
+on: 
   push:
-    branches: ["main"]
-
-  # Allows you to run this workflow manually from the Actions tab
+    branches:
+      - main
   workflow_dispatch:
 
-# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
-permissions:
-  contents: read
-  pages: write
-  id-token: write
-
-# Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
-# However, do NOT cancel in-progress runs as we want to allow these production deployments to complete.
-concurrency:
-  group: "pages"
-  cancel-in-progress: false
-
 jobs:
-  # Build job
+
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-      - name: Setup Pages
-        uses: actions/configure-pages@v3
-      - name: Build with Jekyll
-        uses: actions/jekyll-build-pages@v1
-        with:
-          source: ./
-          destination: ./_site
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v2
+    - uses: actions/checkout@v2
 
-  # create database
-  laravel-create-database:
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-      - name: Download artifact
-        uses: actions/download-artifact@v2
-        with:
-          name: pages
-          path: _site
-      - name: Create database
-        run: |
-          cd _site
-          mkdir -p database
-          touch database/database.sqlite
+    - name: Setup Pages
+      uses: actions/configure-pages@v2
 
-  # run laravel migration
-  laravel-migration:
+    - name: Build with Laravel
+      run: |
+        composer install
+        npm install
+        npm run prod
+        php artisan config:cache
+
+    - name: Upload artifact
+      uses: actions/upload-pages-artifact@v1
+      with:
+        name: pages
+        path: public
+
+  deploy:
     needs: build
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-      - name: Download artifact
-        uses: actions/download-artifact@v2
-        with:
-          name: pages
-          path: _site
-      - name: Run migration
-        run: |
-          cd _site
-          php artisan migrate --force
-          
-  # run laravel server
-  laravel-server:
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-      - name: Download artifact
-        uses: actions/download-artifact@v2
-        with:
-          name: pages
-          path: _site
-      - name: Run server
-        run: |
-          cd _site
-          php artisan serve --port=80 --host=0.0.0.0
+    - uses: actions/checkout@v2
+    
+    - name: Download artifact
+      uses: actions/download-artifact@v2
+      with:
+        name: pages
+        path: public
+
+    - name: Deploy to GitHub Pages
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./public
