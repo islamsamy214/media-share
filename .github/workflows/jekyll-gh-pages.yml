@@ -1,10 +1,10 @@
-name: Deploy Laravel
+name: Deploy Laravel 
 
 on:
   push:
     branches:
       - main
-  workflow_dispatch:
+  workflow_dispatch:   
 
 jobs:
 
@@ -13,17 +13,18 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+
     - uses: actions/checkout@v2
-    
-    - name: Setup PHP
-      uses: shivammathur/setup-php@v2
-      with:
-        php-version: 7.4
+
+    - name: Upgrade OpenSSL
+      run: |
+        sudo apt-get update
+        sudo apt-get install openssl
 
     - name: Install Dependencies
       run: composer install
 
-    - name: Build Assets
+    - name: Build Assets  
       run: |
         npm install
         npm run prod
@@ -31,28 +32,28 @@ jobs:
     - name: Cache configuration
       run: php artisan config:cache
 
-    - name: Upload artifact  
+    - name: Upload artifact
       uses: actions/upload-artifact@v2
       with:
         name: pages
         path: public
 
   deploy:
-
-    needs: build
     
+    needs: build
+   
     runs-on: ubuntu-latest
 
     steps:
 
-    - name: Download artifact
+    - name: Download artifact  
       uses: actions/download-artifact@v2
       with:
-        name: pages
-        path: public
+       name: pages
+       path: public
 
     - name: Deploy to GitHub Pages
       uses: peaceiris/actions-gh-pages@v3
-      with:
+      with: 
         github_token: ${{ secrets.GITHUB_TOKEN }}
         publish_dir: ./public
