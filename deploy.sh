@@ -2,10 +2,10 @@
 echo "Running composer"
 composer update --no-dev --working-dir=/var/www/html
 
-echo "Running npm"
+echo "Running yarn"
 node -v
-npm update --prefix /var/www/html
-npm run prod --prefix /var/www/html
+yarn update --prefix /var/www/html
+yarn run prod --prefix /var/www/html
 
 # if /var/www/html/database/database.sqlite does not exist then create it
 echo "Checking if database exists..."
