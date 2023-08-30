@@ -3,7 +3,8 @@ echo "Running composer"
 composer update --no-dev --working-dir=/var/www/html
 
 echo "Running npm"
-npm install --prefix /var/www/html
+node -v
+npm update --prefix /var/www/html
 npm run prod --prefix /var/www/html
 
 # if /var/www/html/database/database.sqlite does not exist then create it
