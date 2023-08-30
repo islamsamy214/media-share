@@ -20,7 +20,9 @@ ENV COMPOSER_ALLOW_SUPERUSER 1
 RUN chmod 777 -R ./storage/ ./bootstrap/ ./public/ ./deploy.sh
 RUN chmod +x deploy.sh
 
-# download nodejs
+# install curl then download nodejs
+RUN apt-get update
+RUN apt-get install -y curl
 RUN curl -sL https://deb.nodesource.com/setup_12.x | bash -
 RUN apt-get install -y nodejs
 
