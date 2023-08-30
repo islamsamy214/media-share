@@ -6,13 +6,15 @@ echo "Running npm"
 npm install --prefix /var/www/html
 npm run prod --prefix /var/www/html
 
-echo "Caching config..."
-php artisan config:cache
-
 # if /var/www/html/database/database.sqlite does not exist then create it
+echo "Checking if database exists..."
 if [ ! -f /var/www/html/database/database.sqlite ]; then
     touch /var/www/html/database/database.sqlite
+    php artisan migrate --seed --force
 fi
+
+echo "Caching config..."
+php artisan config:cache
 
 echo "Running migrations..."
 php artisan migrate --force
