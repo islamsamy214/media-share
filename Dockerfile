@@ -20,7 +20,4 @@ ENV COMPOSER_ALLOW_SUPERUSER 1
 RUN chmod 777 -R ./storage/ ./bootstrap/ ./public/ ./deploy.sh
 RUN chmod +x deploy.sh
 
-# update and install nodejs and yarn form the os repository
-RUN apk update && apk add nodejs yarn
-
 CMD ["./deploy.sh"]
