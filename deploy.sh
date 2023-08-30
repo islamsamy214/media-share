@@ -4,8 +4,9 @@ composer update --no-dev --working-dir=/var/www/html
 
 echo "Running yarn"
 node -v
-yarn update --prefix /var/www/html
-yarn run prod --prefix /var/www/html
+yarn -v
+yarn install --cwd /var/www/html
+yarn run prod --cwd /var/www/html
 
 # if /var/www/html/database/database.sqlite does not exist then create it
 echo "Checking if database exists..."
