@@ -20,9 +20,9 @@ ENV COMPOSER_ALLOW_SUPERUSER 1
 RUN chmod 777 -R ./storage/ ./bootstrap/ ./public/ ./deploy.sh
 RUN chmod +x deploy.sh
 
-# install curl then download nodejs for centos
-RUN yum install -y curl
-RUN curl -sL https://rpm.nodesource.com/setup_12.x | bash -
-RUN yum install -y nodejs
+# install curl then download nodejs 14 for centos
+RUN apk add --update curl && \
+    curl -sL https://rpm.nodesource.com/setup_14.x | bash - && \
+    apk add nodejs
 
 CMD ["./deploy.sh"]
