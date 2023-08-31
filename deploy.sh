@@ -3,9 +3,10 @@ echo "Running composer"
 composer update --no-dev --working-dir=/var/www/html
 
 echo "Caching config..."
-php artisan config:cache
+php artisan optimize:clear
 
 echo "Running migrations..."
+touch /var/www/html/database/database.sqlite
 php artisan migrate --seed --force
 
 echo "Running server..."
