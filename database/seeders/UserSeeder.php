@@ -33,13 +33,6 @@ class UserSeeder extends Seeder
         User::factory()
             ->has(UserSkill::factory()->count(2), 'skills')
             ->has(UserLanguage::factory()->count(2), 'languages')
-            ->has(Work::factory()
-                ->has(WorkSkill::factory()->count(2), 'skills')
-                ->has(WorkCategory::factory()->count(2), 'categories')
-                ->count(2), 'works')
-            ->has(Blog::factory()
-                ->has(BlogCategory::factory()->count(2), 'categories')
-                ->count(2), 'blogs')
             ->count(10)
             ->create();
     }

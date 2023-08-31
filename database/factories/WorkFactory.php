@@ -29,6 +29,7 @@ class WorkFactory extends Factory
             'description' => $this->faker->realText(200),
             'link' => $this->faker->url,
             'work_date' => $this->faker->date('Y-m-d', 'now'),
+            'user_id' => $this->faker->numberBetween(1, 10),
         ];
     }
 }

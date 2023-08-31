@@ -23,7 +23,8 @@ class VisitFactory extends Factory
     {
         return [
             'ip' => $this->faker->ipv4,
-            'visits_count' => rand(1, 5)
+            'visits_count' => rand(1, 5),
+            'created_at' => $this->faker->dateTimeBetween('-4 months', 'now')
         ];
     }
 }

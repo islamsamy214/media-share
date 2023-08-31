@@ -18,7 +18,9 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             ContactSeeder::class,
             MessageSeeder::class,
-            VisitSeeder::class
+            VisitSeeder::class,
+            BlogCategorySeeder::class,
+            WorkCategorySeeder::class
         ]);
     }
 }
