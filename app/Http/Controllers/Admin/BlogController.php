@@ -82,7 +82,8 @@ class BlogController extends Controller
 
     private function storeBlogForm($request)
     {
-        $form_data = $request->except(['image', 'categories']);
+        $form_data = $request->except(['image', 'categories', 'youtube_link']);
+        $form_data['youtube_link'] = str_replace('watch?v=', 'embed/', $request->youtube_link);
         $form_data['slug'] = str_replace(' ', '-', $request->title);
         if ($request->image) {
             $form_data['image'] = $this->uploadImage($request->image, 'images/blogs');
@@ -126,8 +127,9 @@ class BlogController extends Controller
 
     private function updateBlogForm($request, $blog)
     {
-        $form_data = $request->except(['image', 'categories']);
+        $form_data = $request->except(['image', 'categories', 'youtube_link']);
         $form_data['slug'] = str_replace(' ', '-', $request->title);
+        $form_data['youtube_link'] = str_replace('watch?v=', 'embed/', $request->youtube_link);
         if ($request->image) {
             if ($blog->image != 'default.jpg') {
                 $this->deleteImage($blog->image, 'blogs/');

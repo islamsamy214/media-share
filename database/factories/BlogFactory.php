@@ -17,7 +17,8 @@ class BlogFactory extends Factory
             'title' => $blog_title,
             'slug' => str_replace(' ','-', $blog_title),
             'content' => $this->faker->realText(750),
-            'youtube_link' => 'https://www.youtube.com/watch?v=rfxnmIPCzIc',
+            // 'youtube_link' => 'https://www.youtube.com/watch?v=rfxnmIPCzIc',
+            'youtube_link' => 'https://www.youtube.com/embed/rfxnmIPCzIc',
             'user_id' => $this->faker->numberBetween(1, 10),
         ];
     }
