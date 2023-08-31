@@ -71,6 +71,7 @@
           :to="{
             name: 'admin.works.edit',
             query: { slug: work.slug, id: work.id },
+            params: { slug: work.slug, id: work.id },
           }"
         >
           <icon icon="akar-icons:edit" class="inline mr-2 text-secondary" />

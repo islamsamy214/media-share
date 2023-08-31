@@ -33,6 +33,7 @@
           :to="{
             name: 'about.users.show',
             query: { slug: user.slug, user: JSON.stringify(user) },
+            params: { slug: user.slug, user: JSON.stringify(user) },
           }"
           class="btn"
         >
