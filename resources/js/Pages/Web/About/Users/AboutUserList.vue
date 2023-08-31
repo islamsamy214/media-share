@@ -32,7 +32,7 @@
         <router-link
           :to="{
             name: 'about.users.show',
-            params: { slug: user.slug, user: JSON.stringify(user) },
+            query: { slug: user.slug, user: JSON.stringify(user) },
           }"
           class="btn"
         >

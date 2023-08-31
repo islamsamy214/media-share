@@ -43,6 +43,10 @@
                     class="button-list"
                     :to="{
                       name: 'admin.blogcategories.edit',
+                      query: {
+                        slug: blogCategory.slug,
+                        id: blogCategory.id,
+                      },
                       params: {
                         slug: blogCategory.slug,
                         id: blogCategory.id,

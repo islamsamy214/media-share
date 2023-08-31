@@ -106,7 +106,7 @@ export default {
 
   created() {
     axios
-      .get(`/api/blogs/${this.$route.params.id}`)
+      .get(`/api/blogs/${this.$route.query.id}`)
       .then((response) => {
         this.blog = response.data;
       })
@@ -116,7 +116,7 @@ export default {
   }, //end of created
 
   beforeCreate() {
-    if (this.$route.params.id == undefined) {
+    if (this.$route.query.id == undefined) {
       this.$router.push({ name: "blogs" });
     }
   }, //end of beforeCreate

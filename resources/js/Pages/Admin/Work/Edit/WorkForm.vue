@@ -237,7 +237,7 @@ export default {
       this.form.errors = null;
       this.loading = true;
       axios
-        .post(`/api/admin/works/${this.$route.params.id}`, this.generateFormData())
+        .post(`/api/admin/works/${this.$route.query.id}`, this.generateFormData())
         .then((response) => {
           this.$router.push({ name: "admin.works" });
           //flash message

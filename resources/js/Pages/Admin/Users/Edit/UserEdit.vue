@@ -21,7 +21,7 @@ export default {
   methods: {
     getUser() {
       axios
-        .get(`/api/admin/users/${this.$route.params.id}/edit`)
+        .get(`/api/admin/users/${this.$route.query.id}/edit`)
         .then((response) => {
           this.user = response.data;
         })

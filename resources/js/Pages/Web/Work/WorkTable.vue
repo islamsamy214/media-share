@@ -112,7 +112,7 @@ export default {
     showWork(work) {
       this.$router.push({
         name: "works.show",
-        params: { slug: work.slug, id: work.id },
+        query: { slug: work.slug, id: work.id },
       });
     }, //end of show work
   }, //end of methods

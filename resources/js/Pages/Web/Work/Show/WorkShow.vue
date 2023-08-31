@@ -119,7 +119,7 @@ export default {
 
   created() {
     axios
-      .get(`/api/works/${this.$route.params.id}`)
+      .get(`/api/works/${this.$route.query.id}`)
       .then((response) => {
         this.work = response.data;
       })
@@ -129,7 +129,7 @@ export default {
   }, //end of created
 
   beforeCreate() {
-    if (this.$route.params.id == undefined) {
+    if (this.$route.query.id == undefined) {
       this.$router.push({ name: "works" });
     }
   }, //end of beforeCreate

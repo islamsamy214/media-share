@@ -104,6 +104,7 @@ export default {
     showBlog(blog) {
       this.$router.push({
         name: "admin.blogs.show",
+        query: { slug: blog.slug, id: blog.id },
         params: { slug: blog.slug, id: blog.id },
       });
     }, //end of show blog

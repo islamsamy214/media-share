@@ -80,13 +80,13 @@ export default {
   }, //end of data
 
   beforeCreate() {
-    if (this.$route.params.user == undefined) {
+    if (this.$route.query.user == undefined) {
       this.$router.push({ name: "about" });
     }
   }, //end of beforeCreate
 
   created() {
-    this.user = JSON.parse(this.$route.params.user);
+    this.user = JSON.parse(this.$route.query.user);
   }, //end of created
 };
 </script>

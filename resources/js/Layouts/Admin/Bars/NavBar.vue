@@ -25,7 +25,7 @@
         <router-link
           :to="{
             name: 'admin.users.edit.profile',
-            params: { slug: user.slug, id: user.id },
+            query: { slug: user.slug, id: user.id },
           }"
           class="button-list"
           >profile</router-link

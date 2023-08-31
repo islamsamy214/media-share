@@ -20,9 +20,9 @@ export default {
 
   methods: {
     getUser() {
-      if (this.$route.params.id) {
+      if (this.$route.query.id) {
         axios
-          .get(`/api/admin/users/${this.$route.params.id}/edit`)
+          .get(`/api/admin/users/${this.$route.query.id}/edit`)
           .then((response) => {
             this.user = response.data;
           })
@@ -34,7 +34,7 @@ export default {
   }, //end of methods
 
   beforeCreate() {
-    if (this.$route.params.id == undefined) {
+    if (this.$route.query.id == undefined) {
       this.$router.push({ name: "admin.dashboard" });
     }
   }, //end of before create

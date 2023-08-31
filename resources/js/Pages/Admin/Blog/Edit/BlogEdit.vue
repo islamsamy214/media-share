@@ -22,7 +22,7 @@ export default {
   methods: {
     getBlog() {
       axios
-        .get(`/api/admin/blogs/${this.$route.params.id}/edit`)
+        .get(`/api/admin/blogs/${this.$route.query.id}/edit`)
         .then((response) => {
           this.blog = response.data.blog;
           this.blogCategories = response.data.blogCategories;

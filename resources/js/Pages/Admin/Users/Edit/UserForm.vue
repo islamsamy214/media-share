@@ -691,7 +691,7 @@ export default {
       this.loading = true;
       axios
         .post(
-          `/api/admin/users/${this.$route.params.id}`,
+          `/api/admin/users/${this.$route.query.id}`,
           this.generateFormData()
         )
         .then((response) => {

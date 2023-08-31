@@ -48,7 +48,7 @@
         class="btn"
         :to="{
           name: 'admin.blogs.edit',
-          params: { slug: blog.slug, id: blog.id },
+          query: { slug: blog.slug, id: blog.id },
         }"
       >
         <icon icon="akar-icons:edit" class="inline mr-2 text-secondary" />
@@ -155,7 +155,7 @@ export default {
 
   created() {
     axios
-      .get(`/api/admin/blogs/${this.$route.params.id}`)
+      .get(`/api/admin/blogs/${this.$route.query.id}`)
       .then((response) => {
         this.blog = response.data;
       })
@@ -165,7 +165,7 @@ export default {
   }, //end of created
 
   beforeCreate() {
-    if (this.$route.params.id == undefined) {
+    if (this.$route.query.id == undefined) {
       this.$router.push({ name: "admin.blogs" });
     }
   }, //end of beforeCreate

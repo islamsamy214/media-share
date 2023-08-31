@@ -57,6 +57,10 @@
                   "
                   :to="{
                     name: 'admin.messages.show',
+                    query: {
+                      slug: message.slug,
+                      id: message.id,
+                    },
                     params: {
                       slug: message.slug,
                       id: message.id,

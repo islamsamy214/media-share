@@ -22,7 +22,7 @@ export default {
   methods: {
     getWork() {
       axios
-        .get(`/api/admin/works/${this.$route.params.id}/edit`)
+        .get(`/api/admin/works/${this.$route.query.id}/edit`)
         .then((response) => {
           this.work = response.data.work;
           this.workCategories = response.data.workCategories;

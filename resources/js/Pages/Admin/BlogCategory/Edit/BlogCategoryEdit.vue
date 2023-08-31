@@ -21,7 +21,7 @@ export default {
   methods: {
     getBlogCategory() {
       axios
-        .get(`/api/admin/blogcategories/${this.$route.params.id}/edit`)
+        .get(`/api/admin/blogcategories/${this.$route.query.id}/edit`)
         .then((response) => {
           this.blogCategory = response.data;
         })

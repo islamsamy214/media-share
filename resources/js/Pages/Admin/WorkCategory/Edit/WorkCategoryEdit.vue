@@ -21,7 +21,7 @@ export default {
   methods: {
     getWorkCategory() {
       axios
-        .get(`/api/admin/workcategories/${this.$route.params.id}/edit`)
+        .get(`/api/admin/workcategories/${this.$route.query.id}/edit`)
         .then((response) => {
           this.workCategory = response.data;
         })

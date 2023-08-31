@@ -70,7 +70,7 @@
           class="btn"
           :to="{
             name: 'admin.works.edit',
-            params: { slug: work.slug, id: work.id },
+            query: { slug: work.slug, id: work.id },
           }"
         >
           <icon icon="akar-icons:edit" class="inline mr-2 text-secondary" />
@@ -168,7 +168,7 @@ export default {
 
   created() {
     axios
-      .get(`/api/admin/works/${this.$route.params.id}`)
+      .get(`/api/admin/works/${this.$route.query.id}`)
       .then((response) => {
         this.work = response.data;
       })
@@ -178,7 +178,7 @@ export default {
   }, //end of created
 
   beforeCreate() {
-    if (this.$route.params.id == undefined) {
+    if (this.$route.query.id == undefined) {
       this.$router.push({ name: "admin.works" });
     }
   }, //end of beforeCreate

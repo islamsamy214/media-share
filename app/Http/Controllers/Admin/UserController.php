@@ -57,7 +57,7 @@ class UserController extends Controller
             ->withCount('works')
             ->withCount('blogs')
             ->latest()->paginate(10);
-    } //end of getUser
+    } //end of getUsers
 
 
     public function store(StoreUserRequest $request)

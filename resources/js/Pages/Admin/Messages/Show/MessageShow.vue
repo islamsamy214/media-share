@@ -94,7 +94,7 @@ export default {
   methods: {
     getMessage() {
       axios
-        .get(`/api/admin/messages/${this.$route.params.id}`)
+        .get(`/api/admin/messages/${this.$route.query.id}`)
         .then((response) => {
           this.message = response.data;
         })
@@ -157,7 +157,7 @@ export default {
   }, //end of created
 
   beforeCreate() {
-    if (this.$route.params.id == undefined) {
+    if (this.$route.query.id == undefined) {
       this.$router.push({ name: "admin.messages" });
     }
   }, //end of beforeCreate

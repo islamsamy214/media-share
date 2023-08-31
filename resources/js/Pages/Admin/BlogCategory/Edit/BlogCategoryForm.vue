@@ -61,7 +61,7 @@ export default {
       this.loading = true;
       axios
         .post(
-          `/api/admin/blogcategories/${this.$route.params.id}`,
+          `/api/admin/blogcategories/${this.$route.query.id}`,
           this.generateFormData()
         )
         .then((response) => {

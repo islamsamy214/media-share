@@ -43,6 +43,10 @@
                     class="button-list"
                     :to="{
                       name: 'admin.workcategories.edit',
+                      query: {
+                        slug: workCategory.slug,
+                        id: workCategory.id,
+                      },
                       params: {
                         slug: workCategory.slug,
                         id: workCategory.id,
