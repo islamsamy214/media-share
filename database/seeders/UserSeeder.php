@@ -2,14 +2,9 @@
 
 namespace Database\Seeders;
 
-use App\Models\Blog;
-use App\Models\BlogCategory;
 use App\Models\User;
-use App\Models\Work;
 use App\Models\UserSkill;
-use App\Models\WorkSkill;
 use App\Models\UserLanguage;
-use App\Models\WorkCategory;
 use Illuminate\Database\Seeder;
 
 class UserSeeder extends Seeder

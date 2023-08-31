@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 echo "Running composer"
-composer update --no-dev --working-dir=/var/www/html
+composer update --working-dir=/var/www/html
 
 echo "Caching config..."
 php artisan optimize:clear
