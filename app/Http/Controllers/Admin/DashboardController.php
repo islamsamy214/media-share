@@ -13,8 +13,10 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        $visits = DB::select('SELECT YEAR(created_at) as year,MONTH(created_at) as month, SUM(visits_count) AS count FROM `visits` GROUP BY month');
-
+        // $visits = DB::select('SELECT YEAR(created_at) as year,MONTH(created_at) as month, SUM(visits_count) AS count FROM `visits` GROUP BY month');
+        $visits = Visit::selectRaw('YEAR(created_at) as year,MONTH(created_at) as month, SUM(visits_count) AS count')
+            ->groupBy('month')
+            ->get();
         return response()->json([
             'cards' => [
                 'blogsCount' => $this->getBlogsCount(),
